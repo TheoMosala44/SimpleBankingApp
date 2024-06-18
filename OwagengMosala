@@ -1,0 +1,74 @@
+package theo.simplebankingapp;
+import java.util.Scanner;
+
+public class SimpleBankingApp {
+    private double balance;
+    private final Scanner scanner;
+    
+    public SimpleBankingApp(){
+        balance = 0.0;
+        scanner = new Scanner(System.in);       
+    }
+    
+    public void displayMenu(){
+        System.out.println("Welcome to Simple Banking App");
+        System.out.println("1.Deposit");
+        System.out.println("2.Withdraw");
+        System.out.println("3.Check Balance");
+        System.out.println("4.Exit");
+        System.out.println("Please enter your choice");
+    }
+    
+    public void deposit(double amount){
+        balance += amount;
+        System.out.println("Deposit successful.Current balance: R" + balance);
+    }
+
+    public void withdraw(double amount){
+        if (balance >= amount){
+            balance -= amount;
+            System.out.println("Withdrawal successful.Current balance: R" + balance);
+        }else {
+            System.out.println("Insuffient funds.");
+        }
+    }
+    
+    public void checkBalance(){
+        System.out.println("Current balance: R" + balance);       
+    }
+    
+    public void start(){
+        try (scanner) {
+            boolean exit = false;
+            while(!exit){
+                displayMenu();
+                int choice = scanner.nextInt();
+                switch (choice){
+                    case 1 -> {
+                        System.out.println("Enter deposit amount: R");
+                        double depositAmount = scanner.nextDouble();
+                        deposit(depositAmount);
+                    }
+                    case 2 -> {
+                        System.out.println("Enter withdrawal amount: R");
+                        double withdrawAmount = scanner.nextDouble();
+                        
+                        withdraw(withdrawAmount);
+                    }
+                    case 3 -> checkBalance();
+                    case 4 -> {
+                        exit = true;
+                        System.out.println("Thank you for using Simple Banking App. Goodbye!");
+                    }
+                    default -> System.out.println("Invalid choice. Please try again.");
+                }
+            }
+        }
+    }
+    
+    public static void main(String[] args) {
+      SimpleBankingApp bankingApp = new SimpleBankingApp();
+      bankingApp.start();
+    
+    }
+}
